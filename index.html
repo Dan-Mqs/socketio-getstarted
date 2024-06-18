@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.io - getting started</title>
+</head>
+<body>
+    <main>
+        <h1>Socket.io basic test</h1>
+        <p>Type a message and click on the button below to send it to all clients</p>
+        <input id="input" type="text"></input>
+        <button type="button" id="button">Send</button>
+    </main>
+<script>
+    const input = document.getElementById('input');
+    const button = document.getElementById('button');
+
+    button.addEventListener('click', ()=>{
+        const message = input.value;
+        console.log(message);
+    })
+</script>
+</body>
+</html>
