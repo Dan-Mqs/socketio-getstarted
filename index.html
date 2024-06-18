@@ -9,16 +9,42 @@
     <main>
         <h1>Socket.io basic test</h1>
         <p>Type a message and click on the button below to send it to all clients</p>
-        <input id="input" type="text"></input>
-        <button type="button" id="button">Send</button>
+        <form id="form">
+            <input id="input" type="text"></input>
+            <button type="submit" id="button">Send</button>
+        </form>
+        <h3>Messages:</h3>
+        <ul id="messages"></ul>
     </main>
-<script>
-    const input = document.getElementById('input');
-    const button = document.getElementById('button');
 
-    button.addEventListener('click', ()=>{
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  const input = document.getElementById('input');
+    const form = document.getElementById('form');
+
+    function createNewItem(message) {
+        const messagesList = document.getElementById('messages');
+        const listItem = document.createElement('li');
+        listItem.textContent = message;
+        messagesList.appendChild(listItem);
+    }
+
+    function sendMessage(){
         const message = input.value;
-        console.log(message);
+        if (message) {
+            socket.emit('new message', message);
+            input.value = '';
+        }
+    }
+
+    form.addEventListener('submit', (evt) => {
+        evt.preventDefault();
+        sendMessage();
+    })
+
+    socket.on("message broadcast", ({message}) => {
+        createNewItem(message);
     })
 </script>
 </body>
